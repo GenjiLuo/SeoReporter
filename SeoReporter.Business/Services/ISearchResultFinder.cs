@@ -1,6 +1,6 @@
 ﻿namespace SeoReporter.Business.Services
 {
-    public interface IMatchFinder
+    public interface ISearchResultFinder
     {
         string FindPositions(string content, string url);
     }

@@ -33,7 +33,7 @@ namespace SeoReporter
         {
             serviceCollection.AddTransient<ISearcher, GoogleSearcher>();
             serviceCollection.AddTransient<IApplication, Application.Application>();
-            serviceCollection.AddTransient<IMatchFinder, SearchResultFinder>();
+            serviceCollection.AddTransient<ISearchResultFinder, SearchResultFinder>();
 
             var builder = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())

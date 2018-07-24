@@ -9,11 +9,11 @@ namespace SeoReporter.Application
     public class Application : IApplication
     {
         private readonly IConfiguration _config;
-        private readonly IMatchFinder _matchFinder;
+        private readonly ISearchResultFinder _matchFinder;
 
         private readonly ISearcher _searcher;
 
-        public Application(ISearcher searcher, IConfiguration config, IMatchFinder matchFinder)
+        public Application(ISearcher searcher, IConfiguration config, ISearchResultFinder matchFinder)
         {
             _searcher = searcher;
             _config = config;
