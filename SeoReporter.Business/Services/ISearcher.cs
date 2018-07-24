@@ -4,6 +4,6 @@ namespace SeoReporter.Business.Services
 {
     public interface ISearcher
     {
-        Task<string> FindRankings(string criteria, string url, int numberOfResults = 100);
+        Task<string> GetContent(string criteria, int numberOfResults = 100);
     }
 }

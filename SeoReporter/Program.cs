@@ -21,16 +21,19 @@ namespace SeoReporter
         {
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
-
             var serviceProvider = serviceCollection.BuildServiceProvider();
-
-            serviceProvider.GetService<IApplication>().Run().GetAwaiter().GetResult();
+            var app = serviceProvider.GetService<IApplication>();
+            while (true)
+            {
+                app.Run().GetAwaiter().GetResult();
+            }
         }
 
         private static void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<ISearcher, GoogleSearcher>();
             serviceCollection.AddTransient<IApplication, Application.Application>();
+            serviceCollection.AddTransient<IMatchFinder, SearchResultFinder>();
 
             var builder = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
@@ -39,7 +42,7 @@ namespace SeoReporter
             var configuration = builder.Build();
 
             serviceCollection.AddSingleton<IConfiguration>(configuration);
-            serviceCollection.AddSingleton(new HttpClient());
+            serviceCollection.AddSingleton<IHttpClientWrapper>(new HttpClientWrapper());
         }
     }
 }

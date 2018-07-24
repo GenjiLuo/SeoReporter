@@ -1,29 +1,27 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using SeoReporter.Business.Helpers;
 
 namespace SeoReporter.Business.Services
 {
     public class GoogleSearcher : ISearcher
     {
-        private HttpClient _httpClient;
-        public GoogleSearcher(HttpClient httpClient) 
+        private readonly IHttpClientWrapper _httpClientWrapper;
+
+        public GoogleSearcher(IHttpClientWrapper httpClientWrapper)
         {
-            _httpClient = httpClient;
+            _httpClientWrapper = httpClientWrapper;
         }
 
-        public async Task<string> FindRankings(string criteria, string url, int numberOfResults = 100)
+        public async Task<string> GetContent(string criteria, int numberOfResults = 100)
         {
             var googleUrl = $"https://www.google.com.au/search?num={numberOfResults}&q={criteria.GetQueryStringFriendlyParameters()}";
-            var response = await _httpClient.GetAsync(googleUrl);
+            var response = await _httpClientWrapper.GetAsync(googleUrl);
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
+                return await response.Content.ReadAsStringAsync();
             }
-            
-            return "";
 
+            return null;
         }
     }
 }
